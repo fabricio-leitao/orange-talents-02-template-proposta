@@ -7,6 +7,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 public class Proposta {
@@ -26,8 +27,16 @@ public class Proposta {
     @NotNull
     private BigDecimal salario;
 
+    @NotNull
+    @Column(updatable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
+
     @NotNull @Enumerated(EnumType.STRING)
     private StatusProposta status = StatusProposta.PENDENTE;
+
+    private LocalDateTime updatedAt;
+
+
 
     @Deprecated
     public Proposta() {
@@ -69,11 +78,20 @@ public class Proposta {
         return status;
     }
 
-    public void setStatus(StatusProposta status) {
-        this.status = status;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void updateStatus(StatusProposta status) {
+
+        if(status == null){
+            throw new IllegalArgumentException("Status can not be null");
+        }
+        this.status = status;
+        this.updatedAt = LocalDateTime.now();
     }
 }

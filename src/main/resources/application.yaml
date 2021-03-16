@@ -25,3 +25,16 @@ spring:
   database-platform: org.hibernate.dialect.PostgreSQL94Dialect
 
 
+analiseFinanceiraClient:
+  targetUrl: http://localhost:9999/
+
+feign:
+  client:
+    config:
+      analiseFinanceiraClient:
+        loggerLevel: full
+        connectTimeout: 5000
+        readTimeout: 5000
+
+
+logging.level.br.com.zup.propostarefatorada.proposta.integracao.AnaliseFinanceiraClient: DEBUG

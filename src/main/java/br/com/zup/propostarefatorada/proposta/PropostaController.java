@@ -1,12 +1,19 @@
 package br.com.zup.propostarefatorada.proposta;
 
 import br.com.zup.propostarefatorada.exception.ErroPadronizado;
+import br.com.zup.propostarefatorada.proposta.integracao.AnaliseFinanceiraClient;
+import br.com.zup.propostarefatorada.proposta.integracao.AnaliseFinanceiraRequest;
+import br.com.zup.propostarefatorada.proposta.integracao.AnaliseFinanceiraResponse;
+import feign.FeignException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
@@ -23,6 +30,9 @@ public class PropostaController {
     @Autowired
     private PropostaRepository repository;
 
+    @Autowired
+    private AnaliseFinanceiraClient analiseFinanceiraClient;
+
     @PostMapping(value = "/api/propostas")
     @Transactional
     public ResponseEntity<?> criarProposta(@Valid @RequestBody NovaPropostaRequest request, UriComponentsBuilder uri){
@@ -33,6 +43,11 @@ public class PropostaController {
 
         Proposta proposta = request.toModel();
         repository.save(proposta);
+
+
+        StatusProposta status = enviaParaAnalise(proposta);
+
+        proposta.updateStatus(status);
 
         URI location = uri.path("/api/propostas/{id}")
                 .buildAndExpand(proposta.getId()).toUri();
@@ -52,5 +67,18 @@ public class PropostaController {
         //Corrigido
         return ResponseEntity.ok(new PropostaResponse(proposta.get()));
         //return ResponseEntity.ok(proposta);
+    }
+
+    private StatusProposta enviaParaAnalise(Proposta proposta) {
+
+        try{
+            AnaliseFinanceiraRequest req = new AnaliseFinanceiraRequest(proposta);
+            AnaliseFinanceiraResponse response = analiseFinanceiraClient.buscaPorAnaliseFinanceira(req);
+            return response.toModel();
+        } catch (FeignException.UnprocessableEntity e){
+            return StatusProposta.NAO_ELEGIVEL;
+        } catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Um Erro inesperado aconteceu!");
+        }
     }
 }
