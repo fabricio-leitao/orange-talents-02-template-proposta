@@ -1,5 +1,10 @@
 package br.com.zup.propostarefatorada.proposta;
 
+import br.com.zup.propostarefatorada.cartao.Cartao;
+import br.com.zup.propostarefatorada.cartao.CartaoRepository;
+import br.com.zup.propostarefatorada.cartao.integracao.AssociaPropostaCartaoClient;
+import br.com.zup.propostarefatorada.cartao.integracao.CartaoAssociadoRequest;
+import br.com.zup.propostarefatorada.cartao.integracao.CartaoAssociadoResponse;
 import br.com.zup.propostarefatorada.exception.ErroPadronizado;
 import br.com.zup.propostarefatorada.proposta.integracao.AnaliseFinanceiraClient;
 import br.com.zup.propostarefatorada.proposta.integracao.AnaliseFinanceiraRequest;
@@ -19,19 +24,27 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
 public class PropostaController {
 
-    private final Logger logger = LoggerFactory.getLogger(PropostaController.class);
-
     @Autowired
     private PropostaRepository repository;
 
     @Autowired
+    private CartaoRepository cartaoRepository;
+
+    @Autowired
     private AnaliseFinanceiraClient analiseFinanceiraClient;
+
+    @Autowired
+    private AssociaPropostaCartaoClient associaPropostaCartaoClient;
+
+    private List<Proposta> propostas = new ArrayList<>();
 
     @PostMapping(value = "/api/propostas")
     @Transactional
@@ -43,11 +56,12 @@ public class PropostaController {
 
         Proposta proposta = request.toModel();
         repository.save(proposta);
-
-
         StatusProposta status = enviaParaAnalise(proposta);
-
         proposta.updateStatus(status);
+
+        if(proposta.getStatus() == StatusProposta.ELEGIVEL){
+            propostas.add(proposta);
+        }
 
         URI location = uri.path("/api/propostas/{id}")
                 .buildAndExpand(proposta.getId()).toUri();
@@ -81,4 +95,6 @@ public class PropostaController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Um Erro inesperado aconteceu!");
         }
     }
+
+
 }

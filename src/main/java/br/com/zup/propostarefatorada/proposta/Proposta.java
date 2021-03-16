@@ -1,5 +1,9 @@
 package br.com.zup.propostarefatorada.proposta;
 
+import br.com.zup.propostarefatorada.cartao.Cartao;
+import br.com.zup.propostarefatorada.cartao.integracao.AssociaPropostaCartaoClient;
+import br.com.zup.propostarefatorada.cartao.integracao.CartaoAssociadoRequest;
+import br.com.zup.propostarefatorada.cartao.integracao.CartaoAssociadoResponse;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -16,6 +20,7 @@ public class Proposta {
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
+    private String numeroCartao;
     @NotBlank
     private String documento;
     @NotBlank @Email
@@ -36,6 +41,8 @@ public class Proposta {
 
     private LocalDateTime updatedAt;
 
+    @OneToOne
+    private Cartao cartao;
 
 
     @Deprecated
@@ -86,6 +93,14 @@ public class Proposta {
         return updatedAt;
     }
 
+    public String getNumeroCartao() {
+        return numeroCartao;
+    }
+
+    public Cartao getCartao() {
+        return cartao;
+    }
+
     public void updateStatus(StatusProposta status) {
 
         if(status == null){
@@ -93,5 +108,15 @@ public class Proposta {
         }
         this.status = status;
         this.updatedAt = LocalDateTime.now();
+    }
+
+
+    public CartaoAssociadoRequest toModel() {
+        return new CartaoAssociadoRequest(documento, nome, id);
+    }
+
+    public void updateCartao(Cartao cartao) {
+        this.cartao = cartao;
+        this.numeroCartao = cartao.getNumeroCartao();
     }
 }
