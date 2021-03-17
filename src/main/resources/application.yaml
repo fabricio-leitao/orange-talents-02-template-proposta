@@ -28,8 +28,12 @@ spring:
 analiseFinanceiraClient:
   targetUrl: ${URL_ANALISE}
 
+#http://localhost:9999/
+
 associaPropostaCartaoClient:
   targetUrl: ${URL_CARTAO}
+
+#http://localhost:8888/
 
 feign:
   client:

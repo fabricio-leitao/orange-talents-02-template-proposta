@@ -1,5 +1,6 @@
 package br.com.zup.propostarefatorada.cartao;
 
+import br.com.zup.propostarefatorada.cartao.biometria.Biometria;
 import br.com.zup.propostarefatorada.cartao.integracao.aviso.Aviso;
 import br.com.zup.propostarefatorada.cartao.integracao.bloqueio.Bloqueio;
 import br.com.zup.propostarefatorada.cartao.integracao.carteira.Carteira;
@@ -41,6 +42,9 @@ public class Cartao {
     private Integer limite;
     private Renegociacao renegociacao;
     private Vencimento vencimento;
+
+    @OneToMany(mappedBy = "cartao", cascade = CascadeType.PERSIST)
+    private List<Biometria> biometrias;
 
     @OneToOne
     private Proposta proposta;
