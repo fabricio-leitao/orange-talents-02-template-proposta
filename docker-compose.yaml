@@ -81,6 +81,29 @@ services:
       LOG_LEVEL: INFO
       JAEGER_ENDPOINT: http://jaeger:14268/api/traces
 
+  aplicacao:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    image: java:11
+    container_name: minhapropostaapp
+    ports:
+      - 8080:8080
+    depends_on:
+      - grafana
+      - prometheus
+      - jaeger
+      - kafka
+      - zookeeper
+      - contas
+      - analise
+      - transacoes
+      - postgres
+    environment:
+      URL_ANALISE: http://analise:9999/
+      URL_CARTAO: http://contas:8888/
+      DB_URL: postgres
+
   transacoes:
     image: 'zupacademy/transacoes'
     ports:

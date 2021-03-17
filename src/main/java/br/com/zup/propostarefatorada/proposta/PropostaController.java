@@ -1,21 +1,13 @@
 package br.com.zup.propostarefatorada.proposta;
 
-import br.com.zup.propostarefatorada.cartao.Cartao;
-import br.com.zup.propostarefatorada.cartao.CartaoRepository;
-import br.com.zup.propostarefatorada.cartao.integracao.AssociaPropostaCartaoClient;
-import br.com.zup.propostarefatorada.cartao.integracao.CartaoAssociadoRequest;
-import br.com.zup.propostarefatorada.cartao.integracao.CartaoAssociadoResponse;
 import br.com.zup.propostarefatorada.exception.ErroPadronizado;
 import br.com.zup.propostarefatorada.proposta.integracao.AnaliseFinanceiraClient;
 import br.com.zup.propostarefatorada.proposta.integracao.AnaliseFinanceiraRequest;
 import br.com.zup.propostarefatorada.proposta.integracao.AnaliseFinanceiraResponse;
 import feign.FeignException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -32,17 +24,12 @@ import java.util.Optional;
 @RestController
 public class PropostaController {
 
+
     @Autowired
     private PropostaRepository repository;
 
     @Autowired
-    private CartaoRepository cartaoRepository;
-
-    @Autowired
     private AnaliseFinanceiraClient analiseFinanceiraClient;
-
-    @Autowired
-    private AssociaPropostaCartaoClient associaPropostaCartaoClient;
 
     private List<Proposta> propostas = new ArrayList<>();
 
