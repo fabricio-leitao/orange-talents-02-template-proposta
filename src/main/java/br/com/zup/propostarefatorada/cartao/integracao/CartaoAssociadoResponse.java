@@ -101,7 +101,7 @@ public class CartaoAssociadoResponse {
         List<Carteira> carteiras = new ArrayList<>();
         List<Parcela> parcelas = new ArrayList<>();
 
-        this.bloqueios.forEach(bloqueioResponse -> bloqueios.add(bloqueioResponse.toModel()));
+        //this.bloqueios.forEach((bloqueioResponse -> bloqueios.add(bloqueioResponse.toModel())));
         this.avisos.forEach(avisoResponse -> avisos.add(avisoResponse.toModel()));
         this.carteiras.forEach(carteiraResponse -> carteiras.add(carteiraResponse.toModel()));
         this.parcelas.forEach(parcelaResponse -> parcelas.add(parcelaResponse.toModel()));
@@ -111,5 +111,10 @@ public class CartaoAssociadoResponse {
 
 
         return new Cartao(numeroCartao, emitidoEm, titular, bloqueios, avisos, carteiras, parcelas, limite, renegociacao, vencimento, proposta);
+    }
+
+    public BloqueioResponse getUltimoBloqueio() {
+
+        return bloqueios.get(bloqueios.size() - 1);
     }
 }

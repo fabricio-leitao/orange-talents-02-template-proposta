@@ -24,11 +24,7 @@ public class Cartao {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
     private String numeroCartao;
-
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    @JsonFormat(pattern = "yyy-MM-dd@HH:mm:ss", shape = JsonFormat.Shape.STRING, timezone = "America/Sao_Paulo")
     private LocalDateTime emitidoEm;
-
     private String titular;
 
     @OneToMany(mappedBy = "cartao", cascade = CascadeType.MERGE)
@@ -114,5 +110,11 @@ public class Cartao {
 
     public Vencimento getVencimento() {
         return vencimento;
+    }
+
+    public void toBloqueio(String ipCliente, String userAgent, String sistemaResponsavel) {
+        Bloqueio bloqueio = new Bloqueio(ipCliente, userAgent, sistemaResponsavel, this);
+        this.bloqueios.add(bloqueio);
+
     }
 }

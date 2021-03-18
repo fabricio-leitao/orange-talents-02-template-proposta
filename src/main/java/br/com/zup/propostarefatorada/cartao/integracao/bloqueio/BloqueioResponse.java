@@ -6,41 +6,41 @@ import java.time.LocalDateTime;
 
 public class BloqueioResponse {
 
-    private String id;
-    private LocalDateTime bloqueadoEm;
-    private String sistemaResponsavel;
-    private boolean ativo;
-    private Cartao cartao;
+        private String id;
+        private LocalDateTime bloqueadoEm;
+        private String sistemaResponsavel;
+        private boolean ativo;
+        private Cartao cartao;
 
-    public BloqueioResponse(String id, LocalDateTime bloqueadoEm, String sistemaResponsavel, boolean ativo, Cartao cartao) {
-        this.id = id;
-        this.bloqueadoEm = bloqueadoEm;
-        this.sistemaResponsavel = sistemaResponsavel;
-        this.ativo = ativo;
-        this.cartao = cartao;
-    }
+        public BloqueioResponse(String id, LocalDateTime bloqueadoEm, String sistemaResponsavel, boolean ativo, Cartao cartao) {
+            this.id = id;
+            this.bloqueadoEm = bloqueadoEm;
+            this.sistemaResponsavel = sistemaResponsavel;
+            this.ativo = ativo;
+            this.cartao = cartao;
+        }
 
-    public String getId() {
-        return id;
-    }
+        public String getId() {
+            return id;
+        }
 
-    public LocalDateTime getBloqueadoEm() {
-        return bloqueadoEm;
-    }
+        public LocalDateTime getBloqueadoEm() {
+            return bloqueadoEm;
+        }
 
-    public String getSistemaResponsavel() {
-        return sistemaResponsavel;
-    }
+        public String getSistemaResponsavel() {
+            return sistemaResponsavel;
+        }
 
-    public boolean isAtivo() {
-        return ativo;
-    }
+        public boolean isAtivo() {
+            return ativo;
+        }
 
-    public Cartao getCartao() {
-        return cartao;
-    }
+        public Cartao getCartao() {
+            return cartao;
+        }
 
-    public Bloqueio toModel(){
-        return new Bloqueio(id, bloqueadoEm, sistemaResponsavel, ativo, cartao);
-    }
+    /*public Bloqueio toModel() {
+            return new Bloqueio(id, bloqueadoEm, sistemaResponsavel, ativo, cartao );
+    }*/
 }
