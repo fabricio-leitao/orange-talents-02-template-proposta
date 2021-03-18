@@ -61,3 +61,17 @@ logging:
         zup:
           proposta:
             cartao: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info,health,prometheus
+    prometheus:
+      enabled: true
+    metrics:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
