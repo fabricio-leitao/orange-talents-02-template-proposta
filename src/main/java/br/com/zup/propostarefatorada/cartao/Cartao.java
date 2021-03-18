@@ -1,8 +1,11 @@
 package br.com.zup.propostarefatorada.cartao;
 
 import br.com.zup.propostarefatorada.cartao.biometria.Biometria;
+import br.com.zup.propostarefatorada.cartao.integracao.AssociaPropostaCartaoClient;
 import br.com.zup.propostarefatorada.cartao.integracao.aviso.Aviso;
 import br.com.zup.propostarefatorada.cartao.integracao.bloqueio.Bloqueio;
+import br.com.zup.propostarefatorada.cartao.integracao.bloqueio.BloqueioCartaoResponse;
+import br.com.zup.propostarefatorada.cartao.integracao.bloqueio.BloqueioRequest;
 import br.com.zup.propostarefatorada.cartao.integracao.carteira.Carteira;
 import br.com.zup.propostarefatorada.cartao.integracao.parcela.Parcela;
 import br.com.zup.propostarefatorada.cartao.integracao.renegociacao.Renegociacao;
@@ -44,6 +47,9 @@ public class Cartao {
 
     @OneToOne
     private Proposta proposta;
+
+    @Enumerated(EnumType.STRING)
+    private StatusCartao status = StatusCartao.ATIVO;
 
     @Deprecated
     public Cartao() {
@@ -115,6 +121,9 @@ public class Cartao {
     public void toBloqueio(String ipCliente, String userAgent, String sistemaResponsavel) {
         Bloqueio bloqueio = new Bloqueio(ipCliente, userAgent, sistemaResponsavel, this);
         this.bloqueios.add(bloqueio);
+    }
 
+    public void updateStatus(StatusCartao status) throws  Exception{
+        this.status = status;
     }
 }

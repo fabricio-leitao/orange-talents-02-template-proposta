@@ -112,9 +112,4 @@ public class CartaoAssociadoResponse {
 
         return new Cartao(numeroCartao, emitidoEm, titular, bloqueios, avisos, carteiras, parcelas, limite, renegociacao, vencimento, proposta);
     }
-
-    public BloqueioResponse getUltimoBloqueio() {
-
-        return bloqueios.get(bloqueios.size() - 1);
-    }
 }

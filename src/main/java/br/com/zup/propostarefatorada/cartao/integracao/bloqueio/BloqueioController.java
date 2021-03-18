@@ -32,8 +32,6 @@ public class BloqueioController {
     private CartaoRepository cartaoRepository;
     @Autowired
     private AssociaPropostaCartaoClient associaPropostaCartaoClient;
-    @Autowired
-    BloqueioRepository bloqueioRepository;
 
     @Transactional
     @PostMapping("/api/cartoes/{id}/bloqueado")
@@ -50,10 +48,11 @@ public class BloqueioController {
             BloqueioCartaoResponse bloqueioCartaoResponse = associaPropostaCartaoClient.bloquearCartao(numeroCartao, request);
             if (bloqueioCartaoResponse.getResultado().equals("BLOQUEADO")) {
                 cartao.toBloqueio(ipCliente, userAgent, request.getSistemaResponsavel());
+                cartao.updateStatus(bloqueioCartaoResponse.toStatusCartao());
                 cartaoRepository.save(cartao);
             }
         } catch (FeignException e) {
-            return ResponseEntity.unprocessableEntity().body("Cartão já estábloqueado");
+            return ResponseEntity.unprocessableEntity().body("Cartão já está bloqueado");
         }catch (Exception e){
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno de servidor!!Tente Novamente");
         }
