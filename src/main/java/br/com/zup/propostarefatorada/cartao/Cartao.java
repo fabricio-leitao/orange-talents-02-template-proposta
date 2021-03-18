@@ -126,4 +126,8 @@ public class Cartao {
     public void updateStatus(StatusCartao status) throws  Exception{
         this.status = status;
     }
+
+    public void viagemAgendada(Aviso aviso){
+        this.avisos.add(aviso);
+    }
 }

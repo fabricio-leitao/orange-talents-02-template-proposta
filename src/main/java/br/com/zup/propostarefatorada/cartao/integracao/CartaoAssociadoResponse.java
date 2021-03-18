@@ -3,7 +3,6 @@ package br.com.zup.propostarefatorada.cartao.integracao;
 
 import br.com.zup.propostarefatorada.cartao.Cartao;
 import br.com.zup.propostarefatorada.cartao.integracao.aviso.Aviso;
-import br.com.zup.propostarefatorada.cartao.integracao.aviso.AvisoResponse;
 import br.com.zup.propostarefatorada.cartao.integracao.bloqueio.Bloqueio;
 import br.com.zup.propostarefatorada.cartao.integracao.bloqueio.BloqueioResponse;
 import br.com.zup.propostarefatorada.cartao.integracao.carteira.Carteira;
@@ -28,7 +27,7 @@ public class CartaoAssociadoResponse {
     private LocalDateTime emitidoEm;
     private String titular;
     private List<BloqueioResponse> bloqueios;
-    private List<AvisoResponse> avisos;
+    private List<Aviso> avisos;
     private List<CarteiraResponse> carteiras;
     private List<ParcelaResponse> parcelas;
     private Integer limite;
@@ -36,7 +35,7 @@ public class CartaoAssociadoResponse {
     private RenegociacaoResponse renegociacao;
     private VencimentoResponse vencimento;
 
-    public CartaoAssociadoResponse(String numeroCartao, LocalDateTime emitidoEm, String titular, List<BloqueioResponse> bloqueios, List<AvisoResponse> avisos, List<CarteiraResponse> carteiras, List<ParcelaResponse> parcelas, Integer limite, String idProposta, RenegociacaoResponse renegociacao, VencimentoResponse vencimento) {
+    public CartaoAssociadoResponse(String numeroCartao, LocalDateTime emitidoEm, String titular, List<BloqueioResponse> bloqueios, List<Aviso> avisos, List<CarteiraResponse> carteiras, List<ParcelaResponse> parcelas, Integer limite, String idProposta, RenegociacaoResponse renegociacao, VencimentoResponse vencimento) {
         this.numeroCartao = numeroCartao;
         this.emitidoEm = emitidoEm;
         this.titular = titular;
@@ -66,7 +65,7 @@ public class CartaoAssociadoResponse {
         return bloqueios;
     }
 
-    public List<AvisoResponse> getAvisos() {
+    public List<Aviso> getAvisos() {
         return avisos;
     }
 
@@ -102,7 +101,7 @@ public class CartaoAssociadoResponse {
         List<Parcela> parcelas = new ArrayList<>();
 
         //this.bloqueios.forEach((bloqueioResponse -> bloqueios.add(bloqueioResponse.toModel())));
-        this.avisos.forEach(avisoResponse -> avisos.add(avisoResponse.toModel()));
+        //this.avisos.forEach(avisoResponse -> avisos.add(avisoResponse.toModel()));
         this.carteiras.forEach(carteiraResponse -> carteiras.add(carteiraResponse.toModel()));
         this.parcelas.forEach(parcelaResponse -> parcelas.add(parcelaResponse.toModel()));
 
