@@ -1,19 +1,13 @@
 package br.com.zup.propostarefatorada.cartao;
 
 import br.com.zup.propostarefatorada.cartao.biometria.Biometria;
-import br.com.zup.propostarefatorada.cartao.integracao.AssociaPropostaCartaoClient;
-import br.com.zup.propostarefatorada.cartao.integracao.aviso.Aviso;
 import br.com.zup.propostarefatorada.cartao.integracao.bloqueio.Bloqueio;
-import br.com.zup.propostarefatorada.cartao.integracao.bloqueio.BloqueioCartaoResponse;
-import br.com.zup.propostarefatorada.cartao.integracao.bloqueio.BloqueioRequest;
 import br.com.zup.propostarefatorada.cartao.integracao.carteira.Carteira;
 import br.com.zup.propostarefatorada.cartao.integracao.parcela.Parcela;
 import br.com.zup.propostarefatorada.cartao.integracao.renegociacao.Renegociacao;
 import br.com.zup.propostarefatorada.cartao.integracao.vencimento.Vencimento;
 import br.com.zup.propostarefatorada.proposta.Proposta;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -32,8 +26,6 @@ public class Cartao {
 
     @OneToMany(mappedBy = "cartao", cascade = CascadeType.MERGE)
     private List<Bloqueio> bloqueios;
-    @OneToMany(mappedBy = "cartao", cascade = CascadeType.MERGE)
-    private List<Aviso> avisos;
     @OneToMany(mappedBy = "cartao", cascade = CascadeType.MERGE)
     private List<Carteira> carteiras;
     @OneToMany(mappedBy = "cartao", cascade = CascadeType.MERGE)
@@ -56,12 +48,11 @@ public class Cartao {
     }
 
 
-    public Cartao(String numeroCartao, LocalDateTime emitidoEm, String titular, List<Bloqueio> bloqueios, List<Aviso> avisos, List<Carteira> carteiras, List<Parcela> parcelas, Integer limite, Renegociacao renegociacao, Vencimento vencimento, Proposta proposta) {
+    public Cartao(String numeroCartao, LocalDateTime emitidoEm, String titular, List<Bloqueio> bloqueios, List<Carteira> carteiras, List<Parcela> parcelas, Integer limite, Renegociacao renegociacao, Vencimento vencimento, Proposta proposta) {
         this.numeroCartao = numeroCartao;
         this.emitidoEm = emitidoEm;
         this.titular = titular;
         this.bloqueios = bloqueios;
-        this.avisos = avisos;
         this.carteiras = carteiras;
         this.parcelas = parcelas;
         this.limite = limite;
@@ -86,9 +77,6 @@ public class Cartao {
         return bloqueios;
     }
 
-    public List<Aviso> getAvisos() {
-        return avisos;
-    }
 
     public List<Carteira> getCarteiras() {
         return carteiras;
@@ -127,7 +115,4 @@ public class Cartao {
         this.status = status;
     }
 
-    public void viagemAgendada(Aviso aviso){
-        this.avisos.add(aviso);
-    }
 }

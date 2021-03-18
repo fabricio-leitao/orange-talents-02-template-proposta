@@ -27,7 +27,6 @@ public class CartaoAssociadoResponse {
     private LocalDateTime emitidoEm;
     private String titular;
     private List<BloqueioResponse> bloqueios;
-    private List<Aviso> avisos;
     private List<CarteiraResponse> carteiras;
     private List<ParcelaResponse> parcelas;
     private Integer limite;
@@ -35,12 +34,11 @@ public class CartaoAssociadoResponse {
     private RenegociacaoResponse renegociacao;
     private VencimentoResponse vencimento;
 
-    public CartaoAssociadoResponse(String numeroCartao, LocalDateTime emitidoEm, String titular, List<BloqueioResponse> bloqueios, List<Aviso> avisos, List<CarteiraResponse> carteiras, List<ParcelaResponse> parcelas, Integer limite, String idProposta, RenegociacaoResponse renegociacao, VencimentoResponse vencimento) {
+    public CartaoAssociadoResponse(String numeroCartao, LocalDateTime emitidoEm, String titular, List<BloqueioResponse> bloqueios, List<CarteiraResponse> carteiras, List<ParcelaResponse> parcelas, Integer limite, String idProposta, RenegociacaoResponse renegociacao, VencimentoResponse vencimento) {
         this.numeroCartao = numeroCartao;
         this.emitidoEm = emitidoEm;
         this.titular = titular;
         this.bloqueios = bloqueios;
-        this.avisos = avisos;
         this.carteiras = carteiras;
         this.parcelas = parcelas;
         this.limite = limite;
@@ -63,10 +61,6 @@ public class CartaoAssociadoResponse {
 
     public List<BloqueioResponse> getBloqueios() {
         return bloqueios;
-    }
-
-    public List<Aviso> getAvisos() {
-        return avisos;
     }
 
     public List<CarteiraResponse> getCarteiras() {
@@ -96,7 +90,7 @@ public class CartaoAssociadoResponse {
     public Cartao toModel(Proposta proposta) {
 
         List<Bloqueio> bloqueios = new ArrayList<>();
-        List<Aviso> avisos = new ArrayList<>();
+        //List<Aviso> avisos = new ArrayList<>();
         List<Carteira> carteiras = new ArrayList<>();
         List<Parcela> parcelas = new ArrayList<>();
 
@@ -109,6 +103,6 @@ public class CartaoAssociadoResponse {
         Vencimento vencimento = this.vencimento == null ? null : this.vencimento.toModel();
 
 
-        return new Cartao(numeroCartao, emitidoEm, titular, bloqueios, avisos, carteiras, parcelas, limite, renegociacao, vencimento, proposta);
+        return new Cartao(numeroCartao, emitidoEm, titular, bloqueios, carteiras, parcelas, limite, renegociacao, vencimento, proposta);
     }
 }

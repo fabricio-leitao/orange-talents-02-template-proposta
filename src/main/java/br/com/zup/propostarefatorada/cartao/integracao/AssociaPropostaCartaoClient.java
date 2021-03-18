@@ -1,5 +1,7 @@
 package br.com.zup.propostarefatorada.cartao.integracao;
 
+import br.com.zup.propostarefatorada.cartao.integracao.aviso.AvisoRequest;
+import br.com.zup.propostarefatorada.cartao.integracao.aviso.AvisoResponse;
 import br.com.zup.propostarefatorada.cartao.integracao.bloqueio.BloqueioCartaoResponse;
 import br.com.zup.propostarefatorada.cartao.integracao.bloqueio.BloqueioRequest;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -18,4 +20,6 @@ public interface AssociaPropostaCartaoClient {
     @PostMapping("api/cartoes/{id}/bloqueios")
     BloqueioCartaoResponse bloquearCartao(@PathVariable String id, BloqueioRequest request);
 
+    @PostMapping("/api/cartoes/{id}/avisos")
+    AvisoResponse notificarViagem(@PathVariable String id, AvisoRequest request);
 }

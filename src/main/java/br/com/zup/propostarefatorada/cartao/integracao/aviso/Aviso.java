@@ -19,6 +19,7 @@ public class Aviso {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
 
+    @NotNull
     @Future
     @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
     private LocalDate validoAte;
@@ -67,4 +68,17 @@ public class Aviso {
     public Cartao getCartao() {
         return cartao;
     }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public String getIpCliente() {
+        return ipCliente;
+    }
+
+    public String getUserAgent() {
+        return userAgent;
+    }
+
 }
