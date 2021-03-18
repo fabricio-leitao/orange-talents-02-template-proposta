@@ -48,12 +48,11 @@ public class Cartao {
     }
 
 
-    public Cartao(String numeroCartao, LocalDateTime emitidoEm, String titular, List<Bloqueio> bloqueios, List<Carteira> carteiras, List<Parcela> parcelas, Integer limite, Renegociacao renegociacao, Vencimento vencimento, Proposta proposta) {
+    public Cartao(String numeroCartao, LocalDateTime emitidoEm, String titular, List<Bloqueio> bloqueios, List<Parcela> parcelas, Integer limite, Renegociacao renegociacao, Vencimento vencimento, Proposta proposta) {
         this.numeroCartao = numeroCartao;
         this.emitidoEm = emitidoEm;
         this.titular = titular;
         this.bloqueios = bloqueios;
-        this.carteiras = carteiras;
         this.parcelas = parcelas;
         this.limite = limite;
         this.proposta = proposta;
@@ -75,11 +74,6 @@ public class Cartao {
 
     public List<Bloqueio> getBloqueios() {
         return bloqueios;
-    }
-
-
-    public List<Carteira> getCarteiras() {
-        return carteiras;
     }
 
     public List<Parcela> getParcelas() {

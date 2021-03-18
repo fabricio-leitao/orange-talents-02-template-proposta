@@ -15,20 +15,23 @@ public class Carteira {
     private String id;
     private String idExterno;
     private String email;
-    private LocalDateTime associadaEm;
-    private String emissor;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Column(updatable = false)
+    private LocalDateTime associadaEm = LocalDateTime.now();
+
+    @Enumerated(EnumType.STRING)
+    private CarteiraDigital emissor;
+
+    @ManyToOne
     private Cartao cartao;
 
     @Deprecated
     public Carteira() {
     }
 
-    public Carteira(String id, String email, LocalDateTime associadaEm, String emissor, Cartao cartao) {
+    public Carteira(String idExterno, String email, CarteiraDigital emissor, Cartao cartao) {
         this.idExterno = idExterno;
         this.email = email;
-        this.associadaEm = associadaEm;
         this.emissor = emissor;
         this.cartao = cartao;
     }
@@ -49,7 +52,7 @@ public class Carteira {
         return associadaEm;
     }
 
-    public String getEmissor() {
+    public CarteiraDigital getEmissor() {
         return emissor;
     }
 
