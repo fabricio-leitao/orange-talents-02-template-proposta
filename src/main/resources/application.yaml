@@ -40,6 +40,8 @@ associaPropostaCartaoClient:
 
 
 feign:
+  hystrix:
+    enabled: true
   client:
     config:
       analiseFinanceiraClient:
@@ -75,3 +77,19 @@ management:
     export:
       prometheus:
         enabled: true
+
+
+# Jaeger - Habilita ou não
+opentracing:
+  jaeger:
+    enabled: ${JAEGER_ENABLED:true}
+  # Jaeger - Nome do serviço
+    service-name: ${spring.application.name}
+  # Jaeger - Endereço para enviar os metadados (trace, span, etc)
+    http-sender:
+      url: ${JAEGER_ENDPOINT:http://localhost:14268/api/traces}
+  # Jaeger - Tipo de amostragem (probabilístico) e sua configuração (1 = 100%)
+    probabilistic-sampler:
+      sampling-rate: ${JAEGER_SAMPLER:1}
+    rate-limiting-sampler:
+      max-traces-per-second: ${JAEGER_SAMPLER_PER_SECOND:10}

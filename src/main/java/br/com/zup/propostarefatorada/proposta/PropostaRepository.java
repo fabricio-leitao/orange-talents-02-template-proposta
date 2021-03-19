@@ -14,4 +14,6 @@ public interface PropostaRepository extends JpaRepository<Proposta, Long> {
     Optional<Proposta> findById(String idProposta);
 
     List<Proposta> findFirst10ByStatusAndCartaoIsNull(StatusProposta status);
+
+    Proposta findByEmail(String email);
 }

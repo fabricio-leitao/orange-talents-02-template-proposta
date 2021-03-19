@@ -5,6 +5,7 @@ import br.com.zup.propostarefatorada.cartao.integracao.AssociaPropostaCartaoClie
 import br.com.zup.propostarefatorada.cartao.integracao.CartaoAssociadoRequest;
 import br.com.zup.propostarefatorada.cartao.integracao.CartaoAssociadoResponse;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.security.crypto.encrypt.Encryptors;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -50,7 +51,7 @@ public class Proposta {
     }
 
     public Proposta(String documento, String email, String nome, String endereco, BigDecimal salario) {
-        this.documento = documento;
+        this.documento = Encryptors.text("abcabc", "cbacba").encrypt(documento);;
         this.email = email;
         this.nome = nome;
         this.endereco = endereco;
